@@ -1,5 +1,8 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:flutter/material.dart';
 import 'package:transport_app/Billing/print_status_screen.dart';
+import 'package:transport_app/settings/settings_screen.dart';
 
 class DashboardScreen extends StatefulWidget {
   const DashboardScreen({Key? key}) : super(key: key);
@@ -22,9 +25,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
         actions: [
           PopupMenuButton(
             onSelected: (value) {},
-            itemBuilder: (context) => const [
+            itemBuilder: (context) =>  [
               PopupMenuItem(
-                child: Text("Settings"),
+                child: Text("Settings"), 
+                value: Navigator.pushNamed(context, SettingsScreen.routeName),
               ),
               PopupMenuItem(
                 child: Text("Offline sync"),

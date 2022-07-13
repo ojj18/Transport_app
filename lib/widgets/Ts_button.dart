@@ -1,4 +1,3 @@
-import 'dart:ffi';
 
 import 'package:flutter/material.dart';
 
@@ -12,6 +11,7 @@ class TsButton extends StatelessWidget {
     this.maxWidth = double.infinity,
     this.minWidth = 100,
     this.onPressed,
+    this.buttonTextColor
   }) : super(key: key);
 
   final String? buttonText;
@@ -21,6 +21,7 @@ class TsButton extends StatelessWidget {
   final double? maxWidth;
   final double? minWidth;
   final VoidCallback? onPressed;
+  final Color?  buttonTextColor;
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +34,8 @@ class TsButton extends StatelessWidget {
       ),
       child: ElevatedButton(
         onPressed: onPressed,
-        child: Text(buttonText!),
+        child: Text(buttonText!,style: TextStyle(color:buttonTextColor ),
+        ),
         style: ButtonStyle(
           backgroundColor: MaterialStateProperty.all(buttonColor),
         ),
