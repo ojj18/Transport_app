@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:transport_app/Billing/print_status_screen.dart';
 import 'package:transport_app/Dashboard/dashboard_screen.dart';
+import 'package:transport_app/settings/settings_screen.dart';
 import '../Login/login_screen.dart';
 
 main() {
@@ -19,6 +20,8 @@ class MyApp extends StatelessWidget {
         LoginScreen.routeName: (context) => const LoginScreen(),
         DashboardScreen.routeName: (context) => const DashboardScreen(),
         PrintStatusScreen.routeName: (context) => const PrintStatusScreen(),
+        SettingsScreen.routeName:(context) =>  SettingsScreen()
+
       },
     );
   }

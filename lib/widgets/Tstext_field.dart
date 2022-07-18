@@ -24,6 +24,7 @@ class TsFormField extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        if(labelText != null)
         Text(
           labelText!,
           style: TextStyle(
@@ -36,6 +37,8 @@ class TsFormField extends StatelessWidget {
           color: Colors.white,
           height: 50,
           child: TextFormField(
+           // textAlign: TextAlign.center,
+           // textAlignVertical: TextAlignVertical.center,
             cursorColor: Colors.pinkAccent,
             cursorHeight: 30,
             cursorWidth: 2.0,
