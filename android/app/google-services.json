@@ -1,0 +1,83 @@
+{
+  "project_info": {
+    "project_number": "464667760502",
+    "firebase_url": "https://fir-app-d25d6-default-rtdb.firebaseio.com",
+    "project_id": "fir-app-d25d6",
+    "storage_bucket": "fir-app-d25d6.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:464667760502:android:8d6d8da876770885bb8c57",
+        "android_client_info": {
+          "package_name": "com.example.firebase_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "464667760502-aug76n69pee5vseqj1u01efncbc5i88r.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCInMdzPNB8Fqq105E2PYVdTLMjsDkK93U"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "464667760502-aug76n69pee5vseqj1u01efncbc5i88r.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "464667760502-sue9s9ehbdkm443iiv41juv5atn11n84.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.firebaseApp"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:464667760502:android:d740ec39e71adaf1bb8c57",
+        "android_client_info": {
+          "package_name": "com.example.transport_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "464667760502-aug76n69pee5vseqj1u01efncbc5i88r.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCInMdzPNB8Fqq105E2PYVdTLMjsDkK93U"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "464667760502-aug76n69pee5vseqj1u01efncbc5i88r.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "464667760502-sue9s9ehbdkm443iiv41juv5atn11n84.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.firebaseApp"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

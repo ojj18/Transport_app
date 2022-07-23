@@ -1,6 +1,10 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
-import 'package:transport_app/widgets/Ts_button.dart';
-import 'package:transport_app/widgets/Ts_text_dropdown.dart';
+import 'package:flutter_typeahead/flutter_typeahead.dart';
+import 'package:transport_app/common/config.dart';
+import 'package:transport_app/widgets/ts_button.dart';
+import 'package:http/http.dart' as http;
 
 class PrintStatusScreen extends StatefulWidget {
   const PrintStatusScreen({Key? key}) : super(key: key);
@@ -12,9 +16,106 @@ class PrintStatusScreen extends StatefulWidget {
 }
 
 class _PrintStatusScreenState extends State<PrintStatusScreen> {
-  final ScrollController _listScrollController = ScrollController();
-  final ScrollController _customScrollController = ScrollController();
   String? groupValue;
+  final TextEditingController _senderPhoneNumberController =
+      TextEditingController();
+  final TextEditingController _senderAddressController =
+      TextEditingController();
+
+  final TextEditingController _receiverPhoneNumberController =
+      TextEditingController();
+  final TextEditingController _receiverAddressController =
+      TextEditingController();
+
+  // for getting the sender phone number list from database
+  Future<List<String>> getSenderPhoneNumberList(String patern) async {
+    List<String> senderPhoneNumberList = [];
+    final url = Uri.https(baseUrl, sender);
+
+    try {
+      final response = await http.get(
+        url,
+      );
+
+      final extractedData = json.decode(response.body) as Map<String, dynamic>;
+
+      extractedData.forEach((senderId, senderNumber) {
+        senderPhoneNumberList.add(senderNumber['phoneNumber']);
+      });
+    } catch (error) {
+      rethrow;
+    }
+
+    return senderPhoneNumberList;
+  }
+  // for getting the sender address list from database
+
+  Future<List<String>> getSenderAddressList(String patern) async {
+    List<String> senderPhoneNumberList = [];
+    final url = Uri.https(baseUrl, sender);
+
+    try {
+      final response = await http.get(
+        url,
+      );
+
+      final extractedData = json.decode(response.body) as Map<String, dynamic>;
+
+      extractedData.forEach((senderId, senderAddress) {
+        senderPhoneNumberList.add(senderAddress['englishAddress']);
+      });
+    } catch (error) {
+      rethrow;
+    }
+
+    return senderPhoneNumberList;
+  }
+
+  // for getting the receiver phone number list from database
+
+  Future<List<String>> getReceiverPhoneNumberList(String patern) async {
+    List<String> senderPhoneNumberList = [];
+    final url = Uri.https(baseUrl, receiver);
+
+    try {
+      final response = await http.get(
+        url,
+      );
+
+      final extractedData = json.decode(response.body) as Map<String, dynamic>;
+
+      extractedData.forEach((senderId, senderNumber) {
+        senderPhoneNumberList.add(senderNumber['phoneNumber']);
+      });
+    } catch (error) {
+      rethrow;
+    }
+
+    return senderPhoneNumberList;
+  }
+  // for getting the receiver address list from database
+
+  Future<List<String>> getReceiverAddressList(String patern) async {
+    List<String> senderPhoneNumberList = [];
+    final url = Uri.https(baseUrl, receiver);
+
+    try {
+      final response = await http.get(
+        url,
+      );
+
+      final extractedData = json.decode(response.body) as Map<String, dynamic>;
+
+      extractedData.forEach((senderId, senderAddress) {
+        senderPhoneNumberList.add(senderAddress['englishAddress']);
+      });
+    } catch (error) {
+      rethrow;
+    }
+
+    return senderPhoneNumberList;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -66,16 +167,35 @@ class _PrintStatusScreenState extends State<PrintStatusScreen> {
                     border: Border.all(
                         width: 1,
                         color: const Color.fromRGBO(211, 211, 211, 1))),
-                child: TextFormField(
-                  style: const TextStyle(fontSize: 20),
-                  cursorHeight: 25,
-                  cursorColor: Colors.pinkAccent,
-                  decoration: const InputDecoration(
-                    contentPadding: EdgeInsets.only(left: 5),
-                    hintText: "Phone Number",
-                    hintStyle: TextStyle(fontSize: 20, color: Colors.grey),
-                    border: InputBorder.none,
-                  ),
+                child: TypeAheadField(
+                  hideOnLoading: true,
+                  minCharsForSuggestions: 1,
+                  animationDuration: const Duration(milliseconds: 200),
+                  textFieldConfiguration: TextFieldConfiguration(
+                      keyboardType: TextInputType.number,
+                      autofocus: false,
+                      controller: _senderPhoneNumberController,
+                      style: const TextStyle(fontSize: 16),
+                      decoration: const InputDecoration(
+                        contentPadding: EdgeInsets.only(left: 5),
+                        border: InputBorder.none,
+                        hintText: 'Phone Number',
+                        hintStyle: TextStyle(fontSize: 20, color: Colors.grey),
+                      )),
+                  suggestionsCallback: (pattern) async {
+                    return await getSenderPhoneNumberList(pattern);
+                  },
+                  itemBuilder: (context, suggestion) {
+                    return ListTile(
+                      title: Text(suggestion.toString()),
+                      style: ListTileStyle.list,
+                    );
+                  },
+                  onSuggestionSelected: (suggestion) {
+                    setState(() {
+                      _senderPhoneNumberController.text = suggestion.toString();
+                    });
+                  },
                 ),
               ),
               const SizedBox(
@@ -85,11 +205,40 @@ class _PrintStatusScreenState extends State<PrintStatusScreen> {
                 padding: const EdgeInsets.all(5.0),
                 height: 100,
                 decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(3),
-                    border: Border.all(
-                        width: 1,
-                        color: const Color.fromRGBO(211, 211, 211, 1))),
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(3),
+                  border: Border.all(
+                    width: 1,
+                    color: const Color.fromRGBO(211, 211, 211, 1),
+                  ),
+                ),
+                child: TypeAheadField(
+                  hideOnLoading: true,
+                  minCharsForSuggestions: 1,
+                  animationDuration: const Duration(milliseconds: 200),
+                  textFieldConfiguration: TextFieldConfiguration(
+                      keyboardType: TextInputType.streetAddress,
+                      autofocus: false,
+                      controller: _senderAddressController,
+                      style: const TextStyle(fontSize: 16),
+                      decoration: const InputDecoration(
+                        border: InputBorder.none,
+                      )),
+                  suggestionsCallback: (pattern) async {
+                    return await getSenderAddressList(pattern);
+                  },
+                  itemBuilder: (context, suggestion) {
+                    return ListTile(
+                      title: Text(suggestion.toString()),
+                      style: ListTileStyle.list,
+                    );
+                  },
+                  onSuggestionSelected: (suggestion) {
+                    setState(() {
+                      _senderAddressController.text = suggestion.toString();
+                    });
+                  },
+                ),
               ),
               const SizedBox(
                 height: 10,
@@ -102,7 +251,6 @@ class _PrintStatusScreenState extends State<PrintStatusScreen> {
                 ),
               ),
               Container(
-                padding: const EdgeInsets.all(5.0),
                 height: 40,
                 decoration: BoxDecoration(
                     color: Colors.white,
@@ -110,13 +258,82 @@ class _PrintStatusScreenState extends State<PrintStatusScreen> {
                     border: Border.all(
                         width: 1,
                         color: const Color.fromRGBO(211, 211, 211, 1))),
-                child: const Text(
-                  "Phone Number",
-                  style: TextStyle(
-                    color: Colors.grey,
-                    fontSize: 20,
+                child: TypeAheadField(
+                  hideOnLoading: true,
+                  minCharsForSuggestions: 1,
+                  animationDuration: const Duration(milliseconds: 200),
+                  textFieldConfiguration: TextFieldConfiguration(
+                      keyboardType: TextInputType.number,
+                      autofocus: false,
+                      controller: _receiverPhoneNumberController,
+                      style: const TextStyle(fontSize: 16),
+                      decoration: const InputDecoration(
+                        contentPadding: EdgeInsets.only(left: 5),
+                        border: InputBorder.none,
+                        hintText: 'Phone Number',
+                        hintStyle: TextStyle(fontSize: 20, color: Colors.grey),
+                      )),
+                  suggestionsCallback: (pattern) async {
+                    return await getReceiverPhoneNumberList(pattern);
+                  },
+                  itemBuilder: (context, suggestion) {
+                    return ListTile(
+                      title: Text(suggestion.toString()),
+                      style: ListTileStyle.list,
+                    );
+                  },
+                  onSuggestionSelected: (suggestion) {
+                    setState(() {
+                      _receiverPhoneNumberController.text =
+                          suggestion.toString();
+                    });
+                  },
+                ),
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              Container(
+                padding: const EdgeInsets.all(5.0),
+                height: 100,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(3),
+                  border: Border.all(
+                    width: 1,
+                    color: const Color.fromRGBO(211, 211, 211, 1),
                   ),
                 ),
+                child: TypeAheadField(
+                  hideOnLoading: true,
+                  minCharsForSuggestions: 1,
+                  animationDuration: const Duration(milliseconds: 200),
+                  textFieldConfiguration: TextFieldConfiguration(
+                      keyboardType: TextInputType.streetAddress,
+                      autofocus: false,
+                      controller: _receiverAddressController,
+                      style: const TextStyle(fontSize: 16),
+                      decoration: const InputDecoration(
+                        border: InputBorder.none,
+                      )),
+                  suggestionsCallback: (pattern) async {
+                    return await getReceiverAddressList(pattern);
+                  },
+                  itemBuilder: (context, suggestion) {
+                    return ListTile(
+                      title: Text(suggestion.toString()),
+                      style: ListTileStyle.list,
+                    );
+                  },
+                  onSuggestionSelected: (suggestion) {
+                    setState(() {
+                      _receiverAddressController.text = suggestion.toString();
+                    });
+                  },
+                ),
+              ),
+              const SizedBox(
+                height: 10,
               ),
               SizedBox(
                 height: 50,
@@ -166,19 +383,6 @@ class _PrintStatusScreenState extends State<PrintStatusScreen> {
                   ],
                 ),
               ),
-              const SizedBox(
-                height: 10,
-              ),
-              Container(
-                padding: const EdgeInsets.all(5.0),
-                height: 100,
-                decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(3),
-                    border: Border.all(
-                        width: 1,
-                        color: const Color.fromRGBO(211, 211, 211, 1))),
-              )
             ],
           ),
         ),

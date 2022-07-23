@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:transport_app/Dashboard/dashboard_screen.dart';
-import 'package:transport_app/widgets/Ts_button.dart';
-import '../widgets/Tstext_field.dart';
+import 'package:transport_app/widgets/ts_button.dart';
+import '../widgets/tstext_field.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
