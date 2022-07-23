@@ -1,3 +1,5 @@
+// ignore_for_file: file_names
+
 import 'package:flutter/material.dart';
 
 class TsFormField extends StatelessWidget {
@@ -24,21 +26,21 @@ class TsFormField extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        if(labelText != null)
-        Text(
-          labelText!,
-          style: TextStyle(
-            fontSize: labelSize,
-            color: labelColor,
+        if (labelText != null)
+          Text(
+            labelText!,
+            style: TextStyle(
+              fontSize: labelSize,
+              color: labelColor,
+            ),
           ),
-        ),
         Container(
           margin: const EdgeInsets.only(top: 5),
           color: Colors.white,
           height: 50,
           child: TextFormField(
-           // textAlign: TextAlign.center,
-           // textAlignVertical: TextAlignVertical.center,
+            // textAlign: TextAlign.center,
+            // textAlignVertical: TextAlignVertical.center,
             cursorColor: Colors.pinkAccent,
             cursorHeight: 30,
             cursorWidth: 2.0,
