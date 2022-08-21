@@ -10,7 +10,8 @@ class TsFormField extends StatelessWidget {
       this.labelColor,
       this.labelSize,
       this.autoFocus = false,
-      this.textInputAction})
+      this.textInputAction,
+      this.controller})
       : super(key: key);
 
   final String? labelText;
@@ -19,6 +20,7 @@ class TsFormField extends StatelessWidget {
   final double? labelSize;
   final TextInputAction? textInputAction;
   final bool autoFocus;
+  final TextEditingController? controller;
 
   @override
   Widget build(BuildContext context) {
@@ -39,6 +41,7 @@ class TsFormField extends StatelessWidget {
           color: Colors.white,
           height: 50,
           child: TextFormField(
+            controller: controller,
             // textAlign: TextAlign.center,
             // textAlignVertical: TextAlignVertical.center,
             cursorColor: Colors.pinkAccent,

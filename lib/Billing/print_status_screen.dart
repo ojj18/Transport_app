@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
+import 'package:transport_app/Billing/update_screen.dart';
 import 'package:transport_app/common/config.dart';
 import 'package:transport_app/widgets/ts_button.dart';
 import 'package:http/http.dart' as http;
@@ -26,6 +27,9 @@ class _PrintStatusScreenState extends State<PrintStatusScreen> {
       TextEditingController();
   final TextEditingController _receiverAddressController =
       TextEditingController();
+  List locationList = [];
+  String? _mySelection;
+  bool containState = false;
 
   // for getting the sender phone number list from database
   Future<List<String>> getSenderPhoneNumberList(String patern) async {
@@ -114,6 +118,31 @@ class _PrintStatusScreenState extends State<PrintStatusScreen> {
     }
 
     return senderPhoneNumberList;
+  }
+
+  @override
+  void initState() {
+    getLocationList();
+
+    super.initState();
+  }
+
+  getLocationList({String? patern}) async {
+    final url = Uri.https(baseUrl, location);
+
+    try {
+      final response = await http.get(
+        url,
+      );
+
+      final extractedData = json.decode(response.body);
+      locationList = extractedData["location"];
+      _mySelection = locationList[0]['state'];
+    } catch (error) {
+      rethrow;
+    }
+
+    return locationList;
   }
 
   @override
@@ -328,6 +357,28 @@ class _PrintStatusScreenState extends State<PrintStatusScreen> {
                   onSuggestionSelected: (suggestion) {
                     setState(() {
                       _receiverAddressController.text = suggestion.toString();
+                      locationList.map((e) {
+                        containState = _receiverAddressController.text
+                            .contains(e['state']);
+
+                        if (containState == true) {
+                          _mySelection = e['state'];
+                        }
+                      }).toList();
+
+                      if (containState == false) {
+                        showModalBottomSheet(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return const SizedBox(
+                                height: 100,
+                                child: Center(
+                                  child: Text(
+                                      "Please the select through the dropdown list"),
+                                ),
+                              );
+                            });
+                      }
                     });
                   },
                 ),
@@ -336,51 +387,36 @@ class _PrintStatusScreenState extends State<PrintStatusScreen> {
                 height: 10,
               ),
               SizedBox(
-                height: 50,
-                // width: 200,
-                child: Row(
-                  children: [
-                    radioList(
-                        radioValue: "TVM",
-                        radioGroupValue: groupValue,
-                        onChange: (value) {
-                          setState(() {
-                            groupValue = value;
-                          });
-                        }),
-                    radioList(
-                        radioValue: "GIN",
-                        radioGroupValue: groupValue,
-                        onChange: (value) {
-                          setState(() {
-                            groupValue = value;
-                          });
-                        }),
-                    radioList(
-                        radioValue: "VET",
-                        radioGroupValue: groupValue,
-                        onChange: (value) {
-                          setState(() {
-                            groupValue = value;
-                          });
-                        }),
-                    radioList(
-                        radioValue: "CHE",
-                        radioGroupValue: groupValue,
-                        onChange: (value) {
-                          setState(() {
-                            groupValue = value;
-                          });
-                        }),
-                    radioList(
-                        radioValue: "KAN",
-                        radioGroupValue: groupValue,
-                        onChange: (value) {
-                          setState(() {
-                            groupValue = value;
-                          });
-                        }),
-                  ],
+                height: 40,
+                child: DropdownButton(
+                  isExpanded: true,
+                  items: locationList.map((item) {
+                    return DropdownMenuItem(
+                      child: Text(item['state']),
+                      value: item['state'].toString(),
+                    );
+                  }).toList(),
+                  onChanged: (String? newVal) {
+                    setState(() {
+                      _mySelection = newVal;
+                    });
+                  },
+                  value: _mySelection,
+                ),
+              ),
+              Align(
+                alignment: Alignment.centerRight,
+                child: TsButton(
+                  minWidth: 100,
+                  buttonText: "Update",
+                  buttonColor: const Color.fromRGBO(63, 81, 181, 1),
+                  onPressed: () {
+                    showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return const ReceiverUpdateScreen();
+                        });
+                  },
                 ),
               ),
             ],
@@ -401,19 +437,53 @@ class _PrintStatusScreenState extends State<PrintStatusScreen> {
       ),
     );
   }
-
-  Widget radioList(
-      {String? radioValue, String? radioGroupValue, dynamic onChange}) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.start,
-      children: [
-        Radio<String>(
-            activeColor: Colors.pinkAccent,
-            value: radioValue!,
-            groupValue: radioGroupValue,
-            onChanged: onChange),
-        Text(radioValue),
-      ],
-    );
-  }
 }
+ 
+
+
+
+
+// child: Row(
+//                   children: [
+//                     radioList(
+//                         radioValue: "TVM",
+//                         radioGroupValue: groupValue,
+//                         onChange: (value) {
+//                           setState(() {
+//                             groupValue = value;
+//                           });
+//                         }),
+//                     radioList(
+//                         radioValue: "GIN",
+//                         radioGroupValue: groupValue,
+//                         onChange: (value) {
+//                           setState(() {
+//                             groupValue = value;
+//                           });
+//                         }),
+//                     radioList(
+//                         radioValue: "VET",
+//                         radioGroupValue: groupValue,
+//                         onChange: (value) {
+//                           setState(() {
+//                             groupValue = value;
+//                           });
+//                         }),
+//                     radioList(
+//                         radioValue: "CHE",
+//                         radioGroupValue: groupValue,
+//                         onChange: (value) {
+//                           setState(() {
+//                             groupValue = value;
+//                           });
+//                         }),
+//                     radioList(
+//                         radioValue: "KAN",
+//                         radioGroupValue: groupValue,
+//                         onChange: (value) {
+//                           setState(() {
+//                             groupValue = value;
+//                           });
+//                         }),
+//                   ],
+//                 ),
