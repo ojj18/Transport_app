@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:transport_app/Dashboard/dashboard_screen.dart';
 import 'package:transport_app/widgets/ts_button.dart';
@@ -13,6 +14,9 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -32,22 +36,24 @@ class _LoginScreenState extends State<LoginScreen> {
                 height: 150,
                 image: AssetImage('assets/images/login.png'),
               ),
-              const TsFormField(
+              TsFormField(
+                controller: _emailController,
                 autoFocus: false,
                 textInputAction: TextInputAction.next,
                 labelText: "User Name",
-                labelColor: Color.fromRGBO(65, 81, 176, 1),
+                labelColor: const Color.fromRGBO(65, 81, 176, 1),
                 labelSize: 20,
                 hintText: "Enter your Username",
               ),
               const SizedBox(
                 height: 10,
               ),
-              const TsFormField(
+              TsFormField(
+                controller: _passwordController,
                 autoFocus: false,
                 textInputAction: TextInputAction.done,
                 labelText: "Password",
-                labelColor: Color.fromRGBO(65, 81, 176, 1),
+                labelColor: const Color.fromRGBO(65, 81, 176, 1),
                 labelSize: 20,
                 hintText: "Enter your password",
               ),
@@ -58,8 +64,16 @@ class _LoginScreenState extends State<LoginScreen> {
                 minWidth: double.infinity,
                 buttonText: "LOGIN",
                 buttonColor: const Color.fromRGBO(63, 81, 181, 1),
-                onPressed: () {
-                  Navigator.pushNamed(context, DashboardScreen.routeName);
+                onPressed: () async {
+                  await FirebaseAuth.instance
+                      .signInWithEmailAndPassword(
+                        email: _emailController.text.trim(),
+                        password: _passwordController.text.trim(),
+                      )
+                      .then((value) => {
+                            Navigator.pushReplacementNamed(
+                                context, DashboardScreen.routeName)
+                          });
                 },
               )
             ],

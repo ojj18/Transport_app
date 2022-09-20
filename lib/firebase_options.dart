@@ -47,32 +47,33 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyDQNL6xoBTxEJG9qmtqeD6YacYqhyJSuX8',
-    appId: '1:464667760502:web:d9b75c284dc99ff3bb8c57',
-    messagingSenderId: '464667760502',
-    projectId: 'fir-app-d25d6',
-    authDomain: 'fir-app-d25d6.firebaseapp.com',
-    databaseURL: 'https://fir-app-d25d6-default-rtdb.firebaseio.com',
-    storageBucket: 'fir-app-d25d6.appspot.com',
+    apiKey: 'AIzaSyAsEsP6WEq5B6QiD_sAQSwe3B4d2GR91uA',
+    appId: '1:561627930490:web:3d5629c5b4c810569d40c3',
+    messagingSenderId: '561627930490',
+    projectId: 'slsoft',
+    authDomain: 'slsoft.firebaseapp.com',
+    databaseURL: 'https://slsoft-default-rtdb.firebaseio.com',
+    storageBucket: 'slsoft.appspot.com',
+    measurementId: 'G-K1CPN3SX16',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyCInMdzPNB8Fqq105E2PYVdTLMjsDkK93U',
-    appId: '1:464667760502:android:d740ec39e71adaf1bb8c57',
-    messagingSenderId: '464667760502',
-    projectId: 'fir-app-d25d6',
-    databaseURL: 'https://fir-app-d25d6-default-rtdb.firebaseio.com',
-    storageBucket: 'fir-app-d25d6.appspot.com',
+    apiKey: 'AIzaSyBouqBlfq3wrIzzNquJCLzxSiZmOZfAjRY',
+    appId: '1:561627930490:android:70d4b39f20c9e2e29d40c3',
+    messagingSenderId: '561627930490',
+    projectId: 'slsoft',
+    databaseURL: 'https://slsoft-default-rtdb.firebaseio.com',
+    storageBucket: 'slsoft.appspot.com',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyAZlYOHNuCB3MLahVoEzkMpJN4eWDl6MPc',
-    appId: '1:464667760502:ios:9ee58560e29d5218bb8c57',
-    messagingSenderId: '464667760502',
-    projectId: 'fir-app-d25d6',
-    databaseURL: 'https://fir-app-d25d6-default-rtdb.firebaseio.com',
-    storageBucket: 'fir-app-d25d6.appspot.com',
-    iosClientId: '464667760502-t6oje2mbvgkb5p9achap1i6rus18t1s2.apps.googleusercontent.com',
+    apiKey: 'AIzaSyCXD2Qz1HXmrsG7AJ3zSSMiQHw7ICswggw',
+    appId: '1:561627930490:ios:190cefd6897456479d40c3',
+    messagingSenderId: '561627930490',
+    projectId: 'slsoft',
+    databaseURL: 'https://slsoft-default-rtdb.firebaseio.com',
+    storageBucket: 'slsoft.appspot.com',
+    iosClientId: '561627930490-7rb74bje2pg6es254jjcd71josh7994l.apps.googleusercontent.com',
     iosBundleId: 'com.example.transportApp',
   );
 }
