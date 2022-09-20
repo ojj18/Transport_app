@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import 'package:transport_app/Billing%20List/billing_list.dart';
 import 'package:transport_app/Billing/print_status_screen.dart';
 import 'package:transport_app/settings/settings_screen.dart';
 
@@ -22,29 +23,39 @@ class _DashboardScreenState extends State<DashboardScreen> {
         elevation: 0.0,
         backgroundColor: const Color.fromRGBO(63, 81, 181, 1),
         title: const Text('Transport'),
-        actions: [
-          PopupMenuButton(
-            onSelected: (value) {},
-            itemBuilder: (context) =>  [
-              PopupMenuItem(
-                child: Text("Settings"), 
-                value: Navigator.pushNamed(context, SettingsScreen.routeName),
-              ),
-              PopupMenuItem(
-                child: Text("Offline sync"),
-              ),
-              PopupMenuItem(
-                child: Text("Bill List"),
-              ),
-              PopupMenuItem(
-                child: Text("TC List"),
-              ),
-              PopupMenuItem(
-                child: Text("Bluetooth"),
-              ),
-            ],
-          ),
-        ],
+        // actions: [
+        //   PopupMenuButton(
+        //     onSelected: (value) {
+        //       if (value == 0) {
+        //         Navigator.pushReplacementNamed(
+        //             context, SettingsScreen.routeName);
+        //       } else if (value == 2) {
+        //         Navigator.pushReplacementNamed(
+        //             context, BillingListScreen.routeName);
+        //       }
+        //     },
+        //     itemBuilder: (context) => [
+        //       PopupMenuItem(
+        //         child: Text("Settings"),
+        //         value: 0,
+        //       ),
+        //       PopupMenuItem(
+        //         child: Text("Offline sync"),
+        //         value: 1,
+        //       ),
+        //       PopupMenuItem(
+        //         child: Text("Bill List"),
+        //         value: 2,
+        //       ),
+        //       PopupMenuItem(
+        //         child: Text("TC List"),
+        //       ),
+        //       PopupMenuItem(
+        //         child: Text("Bluetooth"),
+        //       ),
+        //     ],
+        //   ),
+        // ],
       ),
       body: Padding(
         padding: const EdgeInsets.all(10.0),
@@ -55,11 +66,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
           childAspectRatio: 4 / 6,
           children: [
             cardWidget("assets/images/bill.png", "BILLING", () {
-              Navigator.pushNamed(context, PrintStatusScreen.routeName);
+              Navigator.pushNamed(context, BillingListScreen.routeName);
             }),
-            cardWidget("assets/images/load.png", "LOAD DETAILS", () {}),
-            cardWidget("assets/images/receipt.png", "RECEIPT", () {}),
-            cardWidget("assets/images/Check.png", "CHECK DC", () {}),
           ],
         ),
       ),
